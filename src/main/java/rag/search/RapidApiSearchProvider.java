@@ -11,8 +11,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class RapidApiSearchProvider implements SearchProvider {
-    public static final String X_RAPIDAPI_KEY = "x-rapidapi-key";
-    public static final String X_RAPIDAPI_HOST = "x-rapidapi-host";
     private final ApiConfig apiConfig;
     private final ProxyConfig proxyConfig;
 
@@ -39,8 +37,8 @@ public class RapidApiSearchProvider implements SearchProvider {
         Request request = new Request.Builder()
                 .url(url)
                 .get()
-                .addHeader(X_RAPIDAPI_KEY, apiConfig.key())
-                .addHeader(X_RAPIDAPI_HOST, apiConfig.host())
+                .addHeader("x-rapidapi-key", apiConfig.key())
+                .addHeader("x-rapidapi-host", apiConfig.host())
                 .addHeader("User-Agent", "Mozilla/5.0")
                 .build();
         try (Response response = client.newCall(request).execute()) {

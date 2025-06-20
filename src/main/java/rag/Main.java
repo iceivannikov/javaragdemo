@@ -26,13 +26,14 @@ public class Main {
         ProxyConfig proxyConfig = ConfigLoader.loadProxyConfig();
         SearchProvider provider = new RapidApiSearchProvider(apiConfig, proxyConfig);
         String search = provider.search(query);
-        System.out.println("RAW SEARCH RESPONSE: " + search);
-        if (search == null || search.isBlank()) {
-            System.out.println("Search response is empty! Проверь параметры запроса и ключи.");
-            return;
-        }
+//        System.out.println("RAW SEARCH RESPONSE: " + search);
+//        if (search == null || search.isBlank()) {
+//            System.out.println("Search response is empty! Проверь параметры запроса и ключи.");
+//            return;
+//        }
         SearchResultParser parser = new RapidApiSearchResultParser();
         List<SearchResult> parse = parser.parse(search);
+        parse.forEach(System.out::println);
         PromptBuilder builder = new SimplePromptBuilder();
         String prompt = builder.buildPrompt(query, parse);
         LLMService service = new TogetherAiService();

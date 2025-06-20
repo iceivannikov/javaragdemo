@@ -10,4 +10,13 @@ public class SearchResult {
         this.title = title;
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "SearchResult{" +
+                "url='" + url + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

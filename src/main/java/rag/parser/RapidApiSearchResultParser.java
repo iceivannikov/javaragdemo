@@ -22,6 +22,10 @@ public class RapidApiSearchResultParser implements SearchResultParser {
             );
             searchResults.add(searchResult);
         }
+        if (results.isEmpty() || !results.isArray()) {
+            // Можно вывести лог или вернуть пустой список
+            return List.of();
+        }
         return searchResults;
     }
 }
