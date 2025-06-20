@@ -1,6 +1,7 @@
 package rag.prompt;
 
-import javax.naming.directory.SearchResult;
+import rag.parser.SearchResult;
+
 import java.util.List;
 
 public class SimplePromptBuilder implements PromptBuilder {
