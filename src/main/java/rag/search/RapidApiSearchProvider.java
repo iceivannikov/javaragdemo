@@ -2,36 +2,22 @@ package rag.search;
 
 import okhttp3.*;
 import rag.config.ApiConfig;
-import rag.config.ProxyConfig;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class RapidApiSearchProvider implements SearchProvider {
     private final ApiConfig apiConfig;
-    private final ProxyConfig proxyConfig;
+    private final OkHttpClient client;
 
-    public RapidApiSearchProvider(ApiConfig apiConfig, ProxyConfig proxyConfig) {
+    public RapidApiSearchProvider(ApiConfig apiConfig, OkHttpClient client) {
         this.apiConfig = apiConfig;
-        this.proxyConfig = proxyConfig;
+        this.client = client;
     }
 
     @Override
     public String search(String query) throws IOException {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(
-                        proxyConfig.host(),
-                        Integer.parseInt(proxyConfig.port()))))
-                .proxyAuthenticator((route, response) -> {
-                    String credential = Credentials.basic(proxyConfig.username(), proxyConfig.password());
-                    return response.request().newBuilder()
-                            .header("Proxy-Authorization", credential)
-                            .build();
-                })
-                .build();
         query = URLEncoder.encode(query, StandardCharsets.UTF_8);
         String url = String.format(apiConfig.endpoint(), query);
         Request request = new Request.Builder()

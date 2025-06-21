@@ -1,5 +1,7 @@
 package rag.config;
 
+import okhttp3.OkHttpClient;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -42,6 +44,13 @@ public class ConfigLoader {
             throw new RuntimeException(e);
         }
         return proxyConfig;
+    }
+
+    public static OkHttpClient buildOkHttpClient(ProxyConfig proxyConfig) {
+        return new OkHttpClient.Builder()
+                .proxy(proxyConfig.toJavaNetProxy())
+                .proxyAuthenticator(proxyConfig.toProxyAuthenticator())
+                .build();
     }
 
     private ConfigLoader(Properties properties) {

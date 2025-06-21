@@ -1,5 +1,6 @@
 package rag;
 
+import okhttp3.OkHttpClient;
 import rag.config.ApiConfig;
 import rag.config.ConfigLoader;
 import rag.config.ProxyConfig;
@@ -24,7 +25,8 @@ public class Main {
         String query = source.getQuery();
         ApiConfig apiConfig = ConfigLoader.loadApiConfig();
         ProxyConfig proxyConfig = ConfigLoader.loadProxyConfig();
-        SearchProvider provider = new RapidApiSearchProvider(apiConfig, proxyConfig);
+        OkHttpClient client = ConfigLoader.buildOkHttpClient(proxyConfig);
+        SearchProvider provider = new RapidApiSearchProvider(apiConfig, client);
         String search = provider.search(query);
 //        System.out.println("RAW SEARCH RESPONSE: " + search);
 //        if (search == null || search.isBlank()) {
