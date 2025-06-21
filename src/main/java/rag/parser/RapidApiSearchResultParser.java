@@ -16,9 +16,9 @@ public class RapidApiSearchResultParser implements SearchResultParser {
         List<SearchResult> searchResults = new ArrayList<>();
         for (JsonNode result : results) {
             SearchResult searchResult = new SearchResult(
-                    result.get("url").asText(""),
-                    result.get("title").asText(""),
-                    result.get("description").asText("")
+                    result.path("url").asText(""),
+                    result.path("title").asText(""),
+                    result.path("description").asText("")
             );
             searchResults.add(searchResult);
         }
